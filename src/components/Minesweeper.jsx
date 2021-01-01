@@ -1,25 +1,33 @@
-import React, { useState } from 'react';
-import { MinesweeperHeader } from './MinesweeperHeader';
+import React, { useEffect, useState } from 'react';
+import { Scoreboard } from './Scoreboard';
 import './Cell.component.css';
-import './NumberViewer.component.css';
+import './DigitalCounter.component.css';
 import { MinesweeperMap } from './MinesweeperMap';
 import { getNewGrid } from './getNewGrid';
-import { gameStatuses } from '../constants';
+import { gameStatuses, levels } from '../constants';
 import { useTimer } from '../hooks/useTimer';
 
 
-function Minesweeper(props) {
-    const height = 20; // const [height, setHeight] = useState(20);
-    const width = 20;// const [width, setWidth] = useState(20);
-    const minesCount = 40;
+function Minesweeper() {
+    const [level, setLevel] = useState(levels[0]);
 
-    const [minesLeft, setMinesLeft] = useState(minesCount);
+    const [minesLeft, setMinesLeft] = useState(level.minesCount);
     const [gameStatus, setGameStatus] = useState(gameStatuses.notStarted);
-    const [grid, setGrid] = useState(getNewGrid(height, width, minesCount));
+    const [grid, setGrid] = useState(getNewGrid(level.height, level.width, level.minesCount));
     const [refresh, setRefresh] = useState(false);
     const [isClicking, setIsClicking] = useState(false);
 
     const timer = useTimer(gameStatus === gameStatuses.running, gameStatus === gameStatuses.notStarted);
+
+    useEffect(reset, [level] );
+
+    function reset() {
+        setGameStatus(gameStatuses.notStarted);
+        setMinesLeft(level.minesCount);
+        setGrid(getNewGrid(level.height, level.width, level.minesCount));
+        setRefresh(refresh => !refresh);
+    }
+    
     
     const isGameOver = () => gameStatus === gameStatuses.won || gameStatus === gameStatuses.lost;
 
@@ -38,30 +46,32 @@ function Minesweeper(props) {
         }
     }
 
-    function reset() {
-        setGameStatus(gameStatuses.notStarted);
-        setGrid(getNewGrid(height, width, minesCount));
-        setMinesLeft(minesCount);
-        setRefresh(!refresh);
-    }
-
     function setGameEnd(status) {
         setGameStatus(status);
     }
 
+    function levelChangeHandler(newLevelId) {
+        if(newLevelId !== level) {
+            setLevel(levels[newLevelId]);
+        }
+    }
 
     return (
         <div className="minesweeper">
             <div>
-                <MinesweeperHeader minesLeft={minesLeft} timer={timer} gameStatus={gameStatus} isClicking={isClicking} resetHandler={reset} />
+                <Scoreboard 
+                    minesLeft={minesLeft}
+                    timer={timer}
+                    gameStatus={gameStatus}
+                    level={level.id}
+                    levelChangeHandler={levelChangeHandler}
+                    isClicking={isClicking}
+                    resetHandler={reset} />
             </div>
             <div onMouseDown={() => setIsClicking(true)} onMouseUp={() => setIsClicking(false)} onMouseLeave={() => setIsClicking(false)}>
                 <MinesweeperMap
                     refresh={refresh}
                     grid={grid}
-                    height={height}
-                    width={width}
-                    minesCount={minesCount}
                     gameOver={isGameOver()}
                     cellGotFlagged={cellGotFlagged}
                     cellGotClicked={cellGotClicked}
@@ -72,3 +82,4 @@ function Minesweeper(props) {
 }
 
 export default Minesweeper;
+
