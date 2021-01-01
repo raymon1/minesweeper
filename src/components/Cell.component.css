@@ -1,22 +1,39 @@
+.cell:active,
+.cell:focus,
 .cell {
-  width: 2em;
-  height: 2em;
+  width: 1.5rem;
+  height: 1.5rem;
   cursor: pointer;
+
+  margin: 0px;
+  padding: 0px;
+  /* width: 21px;
+  height: 21px; */
+  font-weight: bold;
+  font-size: 14px;
+  background-color: #bfbfbf;
+  display: inline-block;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid #707070;
+  border-bottom: 3px solid #707070;
 }
 
 .uncovered-cell:active,
 .uncovered-cell:focus,
 .uncovered-cell {
-  width: 2em;
-  height: 2em;
+  width: 1.5rem;
+  height: 1.5rem;
   font-weight: 900;
   background-color: white;
-  border: 1px;
+  border: 0.5px;
   border-style: solid;
-  border-color: black;
+  border-color: rgb(41, 41, 41);
   outline: none;
   border-collapse: collapse;
   border-spacing: unset;
+  font-size: 0.8rem;
+  background-color: #bfbfbf;
 }
 
 .row {
@@ -27,6 +44,7 @@
   flex-direction: column;
   display: flex;
   align-items: center;
+  background-color: #bfbfbf;
 }
 
 .cell-1 {
@@ -59,10 +77,6 @@
 
 .cell-8 {
   color: grey;
-}
-
-.cell-mine {
-  content: "💣";
 }
 
 .clicked-mine:active,

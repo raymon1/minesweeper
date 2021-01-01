@@ -1,9 +1,10 @@
 import React from 'react';
-import './DigitalCounter.component.css';
+import './Scoreboard.component.css';
 
 
 export function DigitalCounter(props) {
-    return (<div className="digital-counter">{props.value}</div>);
+    const str = "" + props.value
+    return (<div className="digital-counter">{str.padStart(3, '0')}</div>);
 }
 
 export default DigitalCounter;

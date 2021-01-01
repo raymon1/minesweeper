@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Scoreboard } from './Scoreboard';
 import './Cell.component.css';
-import './DigitalCounter.component.css';
-import { MinesweeperMap } from './MinesweeperMap';
+// import './DigitalCounter.component.css';
+import './Minesweeper.component.css';
+import { MinesweeperGrid } from './MinesweeperGrid';
 import { getNewGrid } from './getNewGrid';
 import { gameStatuses, levels } from '../constants';
 import { useTimer } from '../hooks/useTimer';
@@ -58,18 +59,16 @@ function Minesweeper() {
 
     return (
         <div className="minesweeper">
-            <div>
-                <Scoreboard 
-                    minesLeft={minesLeft}
-                    timer={timer}
-                    gameStatus={gameStatus}
-                    level={level.id}
-                    levelChangeHandler={levelChangeHandler}
-                    isClicking={isClicking}
-                    resetHandler={reset} />
-            </div>
-            <div onMouseDown={() => setIsClicking(true)} onMouseUp={() => setIsClicking(false)} onMouseLeave={() => setIsClicking(false)}>
-                <MinesweeperMap
+            <Scoreboard 
+                minesLeft={minesLeft}
+                timer={timer}
+                gameStatus={gameStatus}
+                level={level.id}
+                levelChangeHandler={levelChangeHandler}
+                isClicking={isClicking}
+                resetHandler={reset} />
+            <div className="grid" onMouseDown={() => setIsClicking(true)} onMouseUp={() => setIsClicking(false)} onMouseLeave={() => setIsClicking(false)}>
+                <MinesweeperGrid
                     refresh={refresh}
                     grid={grid}
                     gameOver={isGameOver()}

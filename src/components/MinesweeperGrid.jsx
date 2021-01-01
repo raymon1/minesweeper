@@ -3,7 +3,7 @@ import { Cell } from './Cell';
 import { gameStatuses } from '../constants';
 
 
-export function MinesweeperMap(props) {
+export function MinesweeperGrid(props) {
     const [grid, setGrid] = useState(props.grid);
     const [refresh, setRefresh] = useState(props.refresh);
 
