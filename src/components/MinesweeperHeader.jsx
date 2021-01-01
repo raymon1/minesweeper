@@ -6,7 +6,7 @@ export function MinesweeperHeader(props) {
     return (
         <div>
             <NumberViewer value={props.minesLeft} />
-            <GameStatus status={props.gameStatus} onClickHandler={props.reset} isClicking={props.isClicking} />       
+            <GameStatus status={props.gameStatus} onClickHandler={props.resetHandler} isClicking={props.isClicking} />       
             <NumberViewer value={props.timer} />
         </div>
     );
