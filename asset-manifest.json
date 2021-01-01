@@ -1,8 +1,8 @@
 {
   "files": {
-    "main.css": "./static/css/main.853b627e.chunk.css",
-    "main.js": "./static/js/main.d7cb270b.chunk.js",
-    "main.js.map": "./static/js/main.d7cb270b.chunk.js.map",
+    "main.css": "./static/css/main.78b37ef4.chunk.css",
+    "main.js": "./static/js/main.6ab8869b.chunk.js",
+    "main.js.map": "./static/js/main.6ab8869b.chunk.js.map",
     "runtime-main.js": "./static/js/runtime-main.feb213cd.js",
     "runtime-main.js.map": "./static/js/runtime-main.feb213cd.js.map",
     "static/js/2.94040d12.chunk.js": "./static/js/2.94040d12.chunk.js",
@@ -10,14 +10,14 @@
     "static/js/3.c1c7c5fb.chunk.js": "./static/js/3.c1c7c5fb.chunk.js",
     "static/js/3.c1c7c5fb.chunk.js.map": "./static/js/3.c1c7c5fb.chunk.js.map",
     "index.html": "./index.html",
-    "static/css/main.853b627e.chunk.css.map": "./static/css/main.853b627e.chunk.css.map",
+    "static/css/main.78b37ef4.chunk.css.map": "./static/css/main.78b37ef4.chunk.css.map",
     "static/js/2.94040d12.chunk.js.LICENSE.txt": "./static/js/2.94040d12.chunk.js.LICENSE.txt",
-    "static/media/NumberViewer.component.css": "./static/media/digital-7.93911ab1.ttf"
+    "static/media/DigitalCounter.component.css": "./static/media/digital-7.93911ab1.ttf"
   },
   "entrypoints": [
     "static/js/runtime-main.feb213cd.js",
     "static/js/2.94040d12.chunk.js",
-    "static/css/main.853b627e.chunk.css",
-    "static/js/main.d7cb270b.chunk.js"
+    "static/css/main.78b37ef4.chunk.css",
+    "static/js/main.6ab8869b.chunk.js"
   ]
 }
