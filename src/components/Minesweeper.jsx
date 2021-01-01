@@ -9,8 +9,8 @@ import { useTimer } from '../hooks/useTimer';
 
 
 function Minesweeper(props) {
-    const [height, setHeight] = useState(20);
-    const [width, setWidth] = useState(20);
+    const height = 20; // const [height, setHeight] = useState(20);
+    const width = 20;// const [width, setWidth] = useState(20);
     const minesCount = 40;
 
     const [minesLeft, setMinesLeft] = useState(minesCount);

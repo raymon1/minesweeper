@@ -1,4 +1,4 @@
-import React, { useDebugValue, useState } from 'react';
+import React, { useState } from 'react';
 import { Cell } from './Cell';
 import { gameStatuses } from '../constants';
 
