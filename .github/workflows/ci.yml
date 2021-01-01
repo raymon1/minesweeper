@@ -2,12 +2,23 @@ name: CI
 on: [push]
 jobs:
   build:
-    name: Test
+    
+    name: Build
+    
+    env:
+      SOURCE_DIR: "build/"
+
     runs-on: ubuntu-latest
+    
     steps:
       - uses: actions/checkout@v2
-      - run: yarn install
-      - run: yarn build
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+
 #       - uses: borales/actions-yarn@v2.0.0
 #         with:
 #           cmd: install # will run `yarn install` command
