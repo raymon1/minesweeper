@@ -24,7 +24,14 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
-    - run: npm install
-    - run: npm ci
-    - run: npm run build --if-present
-    - run: npm test
+    - run: yarn build
+    - run: yarn test
+    
+  deploy:
+  
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy react app to github pages
+        # You may pin to the exact commit or the version.
+        # uses: tanwanimohit/deploy-react-to-ghpages@88c048cc9d31f67a792eec8cf9e94c10eb701dd2
+        uses: raymon1/master
