@@ -1,74 +1,93 @@
-import React, { useState } from 'react';
+import React, { useDebugValue, useState } from 'react';
 import { Cell } from './Cell';
-import { GetNewCellsMap } from './GetNewCellsMap';
+import { gameStatuses } from '../constants';
 
 
 export function MinesweeperMap(props) {
+    const [grid, setGrid] = useState(props.grid);
+    const [refresh, setRefresh] = useState(props.refresh);
 
-    const [cells, setCells] = useState(GetNewCellsMap(props.length, props.width, props.minesCount));
-    const [gameOver, setGameOver] = useState(false);
+    if(refresh !== props.refresh) {
+        setRefresh(props.refresh);
+        setGrid(props.grid);
+    }
 
     function handleRightClick(cell, e) {
         e.preventDefault();
+        props.cellGotClicked();
+
         const [x, y] = [cell.x, cell.y];
 
-        if (!cells[x][y].isCovered || gameOver)
+        if (!grid[x][y].isCovered || props.gameOver)
             return;
 
-        const newCells = cells.map(r => r.map(c => ({...c})));
+        const newGrid = grid.map(r => r.map(c => ({...c})));
 
-        newCells[x][y].flagged = !newCells[x][y].flagged;
+        newGrid[x][y].flagged = !newGrid[x][y].flagged;
+        
+        if(hasWon(newGrid)) {
+            props.setGameEnd(gameStatuses.won);
+        }
 
-        setCells(newCells);
+        setGrid(newGrid);
+        props.cellGotFlagged(newGrid[x][y].flagged);
     }
+
+    const hasWon = (grid) => grid.reduce((a, r) => a && r.reduce((a, c) => a && ((c.isMine && c.flagged) || !c.isCovered), true), true);
 
     function handleLeftClick(cell) {
         const [x, y] = [cell.x, cell.y];
+        props.cellGotClicked();
 
-        if (!cells[x][y].isCovered || gameOver || cells[x][y].flagged)
+        if (!grid[x][y].isCovered || grid[x][y].flagged || props.gameOver)
             return;
 
-        if (cells[x][y].isMine) {
-            const newCells = cells.map(r => r.map(c => ({
+        if (grid[x][y].isMine) {
+            const newGrid = grid.map(r => r.map(c => ({
                 ...c,
                 isCovered: c.isMine ? false : c.isCovered
             })));
-            newCells[x][y].clickedMine = true;
+            newGrid[x][y].clickedMine = true;
 
-            setCells(newCells);
-            setGameOver(true);
+            setGrid(newGrid);
+            props.setGameEnd(gameStatuses.lost);
         }
-        else if (cells[x][y].neighboringMines === 0) {
-            const newCells = cells.map(r => r.map(c => ({
+        else  {
+            const newGrid = grid.map(r => r.map(c => ({
                 ...c
             })));
-            newCells[x][y].isCovered = false;
+            newGrid[x][y].isCovered = false;
+            
+            if (grid[x][y].neighboringMines === 0) {
+                uncoverEmptyGrid(newGrid, cell);
+            }
+            else {
+                setGrid(newGrid);
+            }
 
-            uncoverEmptyCells(newCells, cell);
-        }
-        else {
-            const newCells = cells.map(r => r.map(c => ({
-                ...c
-            })));
-            newCells[x][y].isCovered = false;
-
-            setCells(newCells);
+            if(hasWon(newGrid)) {
+                props.setGameEnd(gameStatuses.won);
+            }
         }
     }
 
-    function uncoverEmptyCells(cells, cell) {
+    // BFS
+    function uncoverEmptyGrid(grid, cell) {
         const queue = [[cell.x, cell.y]];
         let k = 0;
+        const length = grid.length;
+        const width = grid[0].length;
+
         while (queue.length > 0) {
             const n = queue.length;
             for (let l = 0; l < n; l++) {
                 const [x, y] = queue.shift();
 
-                for (let i = Math.max(0, x - 1); i < Math.min(props.length, x + 2); ++i) {
-                    for (let j = Math.max(0, y - 1); j < Math.min(props.width, y + 2); ++j) {
-                        if (!cells[i][j].isMine && cells[i][j].isCovered && !cells[i][j].flagged) {
-                            cells[i][j].isCovered = false;
-                            if(cells[i][j].neighboringMines === 0) {
+                for (let i = Math.max(0, x - 1); i < Math.min(length, x + 2); ++i) {
+                    for (let j = Math.max(0, y - 1); j < Math.min(width, y + 2); ++j) {
+                        if (!grid[i][j].isMine && grid[i][j].isCovered && !grid[i][j].flagged) {
+                            grid[i][j].isCovered = false;
+                            if(grid[i][j].neighboringMines === 0) {
                                 queue.push([i, j]);
                             }
                         }
@@ -76,17 +95,15 @@ export function MinesweeperMap(props) {
                 }
             }
 
-            let newCells = cells.map(r => r.map(c => ({ ...c })));
-
-            setTimeout(() => {
-                setCells(newCells);
-
-            }, k++ * 50);
+            // update after each breadth search cycle for animation
+            setTimeout((newGrid) => {
+                setGrid(newGrid);
+            }, k++ * 50, grid);
         }
     }
 
     return (
-        cells.map((r, i) => <div key={i} className="row">
+        grid.map((r, i) => <div key={i} className="row">
             {r.map((c, j) => <Cell
                 key={j}
                 data={c}
@@ -96,5 +113,3 @@ export function MinesweeperMap(props) {
         )
     );
 }
-
-

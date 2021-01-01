@@ -1,6 +1,7 @@
 .cell {
   width: 2em;
   height: 2em;
+  cursor: pointer;
 }
 
 .uncovered-cell:active,

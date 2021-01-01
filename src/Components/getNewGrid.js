@@ -1,44 +1,44 @@
-export function GetNewCellsMap(length, width, minesCount) {
+export function getNewGrid(length, width, minesCount) {
 
     function getNewCells(length, width) {
-        const cells = [];
+        let grid = [];
         for (var i = 0; i < length; i++) {
-            cells[i] = [];
+            grid[i] = [];
             for (var j = 0; j < width; j++) {
-                cells[i][j] = {
+                grid[i][j] = {
                     isMine: false
                 };
             }
         }
 
-        return cells;
+        return grid;
     }
 
-    function addMines(cells, minesCount) {
-        for (var i = 0; i < cells.length && minesCount; ++i) {
-            for (var j = 0; j < cells[i].length && minesCount; ++j, --minesCount) {
-                cells[i][j] = {
+    function addMines(grid, minesCount) {
+        for (var i = 0; i < grid.length && minesCount; ++i) {
+            for (var j = 0; j < grid[i].length && minesCount; ++j, --minesCount) {
+                grid[i][j] = {
                     isMine: true
                 };
             }
         }
 
-        return cells;
+        return grid;
     }
 
-    function randomize(cells) {
-        const n = cells.length;
-        const m = cells[0].length;
+    function randomize(grid) {
+        const n = grid.length;
+        const m = grid[0].length;
         for (let i = 0; i < n; ++i) {
             for (let j = 0; j < m; ++j) {
                 const rand = Math.floor(Math.random() * n * m);
                 const i1 = Math.floor(rand / m);
                 const j1 = rand % m;
-                [cells[i][j], cells[i1][j1]] = [cells[i1][j1], cells[i][j]];
+                [grid[i][j], grid[i1][j1]] = [grid[i1][j1], grid[i][j]];
             }
         }
 
-        return cells;
+        return grid;
     }
 
     function setneighboringMines(mines) {
