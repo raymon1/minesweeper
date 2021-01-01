@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import Minesweeper from './components/Minesweeper';
+import Minesweeper from './components/Minesweeper.jsx';
 
 function App() {
   return (
