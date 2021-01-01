@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Scoreboard } from './Scoreboard';
 import './Cell.component.css';
-// import './DigitalCounter.component.css';
 import './Minesweeper.component.css';
 import { MinesweeperGrid } from './MinesweeperGrid';
 import { getNewGrid } from './getNewGrid';
