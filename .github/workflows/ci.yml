@@ -1,0 +1,43 @@
+name: CI
+on: [push]
+jobs:
+  build:
+    
+    name: Build
+    
+    env:
+      SOURCE_DIR: "build/"
+
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build
+        run: yarn build
+  
+  deploy:
+    
+    name: Deploy
+    
+    if: github.ref == 'refs/heads/master' || github.ref == 'refs/heads/gh-pages'
+    
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy react app to github pages
+      # You may pin to the exact commit or the version.
+      # uses: tanwanimohit/deploy-react-to-ghpages@88c048cc9d31f67a792eec8cf9e94c10eb701dd2
+        uses: tanwanimohit/deploy-react-to-ghpages@v1.0.1
+
+#       - uses: borales/actions-yarn@v2.0.0
+#         with:
+#           cmd: install # will run `yarn install` command
+#       - uses: borales/actions-yarn@v2.0.0
+#         with:
+#           cmd: build # will run `yarn build` command
+#       - uses: borales/actions-yarn@v2.0.0
+#         with:
+#           cmd: test # will run `yarn test` command
