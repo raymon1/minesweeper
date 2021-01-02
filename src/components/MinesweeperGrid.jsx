@@ -33,7 +33,7 @@ export function MinesweeperGrid(props) {
         props.cellGotFlagged(newGrid[x][y].flagged);
     }
 
-    const hasWon = (grid) => grid.reduce((a, r) => a && r.reduce((a, c) => a && ((c.isMine && c.flagged) || !c.isCovered), true), true);
+    const hasWon = (grid) => grid.reduce((a, r) => a && r.reduce((a, c) => a && (c.isMine || !c.isCovered), true), true);
 
     function handleLeftClick(cell) {
         const [x, y] = [cell.x, cell.y];
@@ -66,6 +66,12 @@ export function MinesweeperGrid(props) {
             }
 
             if(hasWon(newGrid)) {
+                const flagsSetGrid = newGrid.map(r => r.map(c => ({
+                    ...c,
+                    flagged: c.isMine
+                })));
+                
+                setGrid(flagsSetGrid);
                 props.setGameEnd(gameStatuses.won);
             }
         }
