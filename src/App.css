@@ -1,3 +1,7 @@
+html {
+  -webkit-touch-callout: default;
+}
+
 .App {
   text-align: center;
 }
