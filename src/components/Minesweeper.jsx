@@ -48,6 +48,9 @@ function Minesweeper() {
 
     function setGameEnd(status) {
         setGameStatus(status);
+        if (status == gameStatuses.won) {
+            setMinesLeft(0);
+        }
     }
 
     function levelChangeHandler(newLevelId) {
