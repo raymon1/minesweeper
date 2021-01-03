@@ -1,5 +1,6 @@
 html {
-  -webkit-touch-callout: default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
 }
 
 .App {
