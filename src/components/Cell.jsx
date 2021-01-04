@@ -1,5 +1,5 @@
 import React from 'react';
-
+import ContextMenuHandler from "./ContextMenuHandler";
 
 export function Cell(props) {
     const cell = props.data.isCovered ? 'cell' : 'uncovered-cell';
@@ -9,11 +9,20 @@ export function Cell(props) {
         (props.data.flagged ? '🚩' : '') : (props.data.isMine ? '💣' : props.data.neighboringMines > 0 ? props.data.neighboringMines : ''); 
     const clickedMine = props.data.clickedMine ? 'clicked-mine' : ''
 
+    const ctxMenuHandler = new ContextMenuHandler(e => {
+        e.preventDefault();
+        props.handleRightClick(props.data, e);
+    });
+
     return (
         <button 
             className={`${cell} ${number} ${mine} ${clickedMine}`}
             onClick={() => props.handleLeftClick(props.data)}
-            onContextMenu={(e) =>props.handleRightClick(props.data, e)}>
+            onContextMenu={ctxMenuHandler.onContextMenu}
+            onTouchStart={ctxMenuHandler.onTouchStart}
+            onTouchCancel={ctxMenuHandler.onTouchCancel}
+            onTouchEnd={ctxMenuHandler.onTouchEnd}
+            onTouchMove={ctxMenuHandler.onTouchMove}>
                 { content }
         </button>
     );
