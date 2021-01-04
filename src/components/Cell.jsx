@@ -9,10 +9,7 @@ export function Cell(props) {
         (props.data.flagged ? '🚩' : '') : (props.data.isMine ? '💣' : props.data.neighboringMines > 0 ? props.data.neighboringMines : ''); 
     const clickedMine = props.data.clickedMine ? 'clicked-mine' : ''
 
-    const ctxMenuHandler = new ContextMenuHandler(e => {
-        e.preventDefault();
-        props.handleRightClick(props.data, e);
-    });
+    const ctxMenuHandler = new ContextMenuHandler(_ => props.handleRightClick(props.data));
 
     return (
         <button 

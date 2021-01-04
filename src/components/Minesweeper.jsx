@@ -48,7 +48,7 @@ function Minesweeper() {
 
     function setGameEnd(status) {
         setGameStatus(status);
-        if (status == gameStatuses.won) {
+        if (status === gameStatuses.won) {
             setMinesLeft(0);
         }
     }

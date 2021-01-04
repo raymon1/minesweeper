@@ -12,8 +12,7 @@ export function MinesweeperGrid(props) {
         setGrid(props.grid);
     }
 
-    function handleRightClick(cell, e) {
-        e.preventDefault();
+    function handleRightClick(cell) {
         props.cellGotClicked();
 
         const [x, y] = [cell.x, cell.y];
